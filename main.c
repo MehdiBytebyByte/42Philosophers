@@ -13,6 +13,11 @@
 #include "philo.h"
 #include <stdlib.h>
 
+
+
+
+
+//test/
 /* memset, printf, malloc, free, write,
 usleep, gettimeofday, pthread_create,
 pthread_detach, pthread_join, pthread_mutex_init,
