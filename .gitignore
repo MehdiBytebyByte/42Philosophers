@@ -1,4 +1,4 @@
-42tools/42tools.sh
-42tools/README.md
-bash-script.sh
+42tools/*
+42tools.sh
+Philosophers
 outfile.txt
