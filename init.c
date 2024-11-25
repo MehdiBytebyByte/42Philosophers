@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/20 21:39:19 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/25 00:07:50 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,20 @@ t_philo	*initallphilos(t_data *data)
 		return (NULL);
 	while (i < data->num)
 	{
-		current = ft_lstnew(i + 1);
+		current = ft_lstnew(i + 1);  //we allocate here
+		if (!current)
+			return (NULL);
 		ft_lstadd_back(&head, current);
 		i++;
 	}
 	current->next = NULL;
-	// current->next = head;
 	i = 1;
 	current = head;
 	while (i <= data->num)
 	{
 		current->data = data;
-		current->is_dead = false;
-		current->is_eating = false;
-		current->is_sleeping = false;
-		current->is_thinking = false;
-		// current->meals_eaten = 0;
-		current->is_dead = false;
 		current->last_meal = 0;
+		current->data->dead = false;
 		current = current->next;
 		i++;
 	}

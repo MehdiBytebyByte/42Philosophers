@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:20:47 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/20 21:49:16 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/24 21:38:25 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ t_philo *create_threads(t_philo *philo)
 	current = philo;
 	while (current)
 	{
-		pthread_create(&current->thread, NULL, &routine,(void *)current);
+		if (pthread_create(&current->thread, NULL, &routine,(void *)current) == -1)
+		{
+			write(2, "THREAD CREATION FAILLED\n", 25);
+			return (NULL);
+		}
 		current = current->next;
 	}
 	return (philo);
@@ -94,19 +98,31 @@ t_philo	*join_threads(t_philo *philo)
 	current = philo;
 	while (current)
 	{
-		pthread_join(current->thread, NULL);
+		if (pthread_join(current->thread, NULL) == -1)
+		{
+			write(2, "THREAD JOIN FAILLED\n", 21);
+			return (NULL);
+		}
 		current = current->next;
 	}return (philo);
 }
 
 t_philo *all_init(t_data *data, t_philo *philo)
 {
-	philo = initallphilos(data);
+	philo = initallphilos(data); // malloc philo linked list
 	if (!philo)
 		return (NULL);
-	philo = initmutix(data, philo);
+	philo = initmutix(data, philo); // malloc mutix array
 	if (!philo)
-		return (NULL);
+		return (NULL); // some malloc or init failed
+	data->write = malloc(sizeof(pthread_mutex_t)); //malloc write mutix
+		if (!data->write)
+			return (NULL);
+	if (pthread_mutex_init(data->write, NULL) != 0)
+	{
+		write(2, "MUTEX INIT FAILLED\n", 20);
+		return (NULL);	
+	}
 	return (philo);
 }
 
@@ -127,29 +143,38 @@ void print_info(t_philo *philo, t_data *data)
 }
 
 
-
+void	f(){system("leaks Philosophers");}
 
 int main(int ac, char **av)
 {
 	t_data	*data;
 	t_philo	*philo;
 
+	// atexit(f);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (write(2, "MALLOC FAILLED\n", 16), 1);
 	if (parse(ac, av, data))
-		return (1);
-	// print_data(data);
-	philo = all_init(data, philo);
+		return (free(data), 1);
+	philo = all_init(data, philo); // init data, philo, mutix
 	if (!philo)
-		return (write(2, "MALLOC FAILLED\n", 16), 1);
-	data->write = malloc(sizeof(pthread_mutex_t));
-	if (!data->write)
-		return (write(2, "MALLOC FAILLED\n", 16), 1);
-	pthread_mutex_init(data->write, NULL);
-	// print_info(philo, data);
-	create_threads(philo);
-	join_threads(philo);
-	pthread_mutex_destroy(data->write);
+	{
+		// malloc or init failed
+		// ifree(data, philo);
+		return (write(2, "Error\n", 7), 1);
+	}
+	if (create_threads(philo) == NULL)
+		{
+			// thread creation failed
+			// ifree(data, philo);
+			return (write(2, "Error\n", 7), 1);
+		}
+	if (join_threads(philo) == NULL)
+	{
+		// thread join failed
+		// ifree(data, philo);
+		return (write(2, "Error\n", 7), 1);
+	}
+	// function to free all mallocs and destroy all mutix
 	return (0);
 }
