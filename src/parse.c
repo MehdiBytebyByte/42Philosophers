@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 02:32:02 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:32:41 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:39:46 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	parse(int ac, char **av, t_data *data)
 	i = 1;
 	if (ac != 5 && ac != 6)
 		return (write(2, "INVALID PARAMETER(S)\n", 22), 1);
-	data->meals = -1;
+	if (ac == 5)
+		data->meals = -1;
 	while (i != ac)
 	{
 		if (parsechar(av[i]))
@@ -72,6 +73,5 @@ int	parse(int ac, char **av, t_data *data)
 	}
 	if (data->num < 2)
 		return (write (2, "INVALID PARAMETER(S)\n", 22), 1);
-	data->start_time = get_current_time();
 	return (0);
 }
