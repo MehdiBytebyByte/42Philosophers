@@ -9,9 +9,9 @@ HEADER = philo.h
 do: all clean
 all: $(NAME)
 %.o: %.c $(HEADER)
-	$(CC) -g -fsanitize=address $(FLAGS) -c $< -o $@ 
+	$(CC) $(FLAGS) -c $< -o $@ 
 $(NAME): $(OBJS)
-	$(CC) -g -fsanitize=address $(FLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 	# rm -f $(OBJS)
 fclean: clean
 	rm -f $(NAME)

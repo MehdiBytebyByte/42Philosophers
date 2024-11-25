@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/19 18:49:14 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/25 00:07:30 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,25 @@
 
 typedef struct s_data
 {
-	int				num;
-	int				dietime;
-	int				eatime;
-	int				sleeptime;
-	int				meals;
-	long long		start_time;
-	bool			someonedied;
-	pthread_mutex_t	*write;
+	int				num;			//number of philo
+	int				dietime;		//time to die if philo didn't eat
+	int				eatime;			//time to eat
+	int				sleeptime;		//time to sleep
+	int				meals;			//number of meals each philo should eat if -1 infinite
+	long long		start_time;		//start time of the simulation
+	bool			dead;			//flag to check if a philo died	
+	pthread_mutex_t	*write;			//mutex for write
+	pthread_mutex_t	*increment;		//mutex for incrementing meals_eaten
 }	t_data;
 typedef struct s_philo
 {
-	int				id;
-	int				meals_eaten;
-	long long		last_meal;
-	t_data			*data;
-	pthread_t		thread;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	bool			is_eating;
-	bool			is_sleeping;
-	bool			is_thinking;
-	bool			is_dead;
+	int				id;				//id of philo
+	int				meals_eaten;	//number of meals eaten by philo
+	long long		last_meal;		//last time philo ate
+	pthread_t		thread;			//thread of philo
+	pthread_mutex_t	*left_fork;		//left fork of philo
+	pthread_mutex_t	*right_fork;	//right fork of philo
+	t_data			*data;			//pointer to data (shared by all philos)
 	struct s_philo	*next;
 }	t_philo;
 
