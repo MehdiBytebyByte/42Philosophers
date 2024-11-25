@@ -6,11 +6,11 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 02:32:02 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/15 12:03:34 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:32:41 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 int	ft_isdigitplusplus(char *str)
 {

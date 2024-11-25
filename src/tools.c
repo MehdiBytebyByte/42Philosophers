@@ -6,11 +6,11 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:36:29 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/15 00:36:56 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:32:41 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 static int	ft_ofchercker(long max, long re, int s)
 {

@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 00:07:30 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:35:47 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,11 @@ t_philo		*initallphilos(t_data *data);
 void		ft_lstadd_back(t_philo **lst, t_philo *new);
 t_philo		*ft_lstnew(int id);
 t_data		*setter(t_data *data, int i, int holder);
+t_philo		*all_init(t_data *data, t_philo *philo);
 t_philo		*initmutix(t_data *data, t_philo *philo);
 void		*routine(void	*arg);
 void		print_status(t_philo *philo, char *status);
 long long	get_current_time(void);
+t_philo		*create_threads(t_philo *philo);
+t_philo		*join_threads(t_philo *philo);
 #endif
