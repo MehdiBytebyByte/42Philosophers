@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:20:47 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:33:37 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:53:06 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,6 @@ void	print_data(t_data *data)
 	printf("meals = %d\n", data->meals);
 }
 
-void	print_philo(t_philo *philo)
-{
-	t_philo	*current;
-	int		i;
-
-	i = 0;
-	current = philo;
-	while (i < current->data->num)
-	{
-		printf("id = %d\n", current->id);
-		i++;
-		current = current->next;
-	}
-}
-
 void print_info(t_philo *philo, t_data *data)
 {
 	t_philo *temp;
@@ -60,6 +45,12 @@ void print_info(t_philo *philo, t_data *data)
 
 void	f(){system("leaks Philosophers");}
 
+void ifree(t_data *data, t_philo *philo)
+{
+	// TODO free all mallocs
+}
+
+
 int main(int ac, char **av)
 {
 	t_data	*data;
@@ -77,21 +68,23 @@ int main(int ac, char **av)
 	if (!philo)
 	{
 		// malloc or init failed
-		// ifree(data, philo);
+		ifree(data, philo);
 		return (write(2, "Error\n", 7), 1);
 	}
+	return (0);
 	if (create_threads(philo) == NULL)
 		{
 			// thread creation failed
-			// ifree(data, philo);
+			ifree(data, philo);
 			return (write(2, "Error\n", 7), 1);
 		}
 	if (join_threads(philo) == NULL)
 	{
 		// thread join failed
-		// ifree(data, philo);
+		ifree(data, philo);
 		return (write(2, "Error\n", 7), 1);
 	}
+	ifree(data, philo);
 	// function to free all mallocs and destroy all mutix
 	return (0);
 }

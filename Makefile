@@ -3,6 +3,7 @@ SRCS = src/main.c src/parse.c src/tools.c src/init.c src/routine.c src/createnjo
 
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
+# FLAGS = -Wall -Wextra -Werror  -g -fsanitize=address
 HEADER = include/philo.h
 
 # do: all clean
