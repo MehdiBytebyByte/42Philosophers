@@ -6,11 +6,11 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 00:07:50 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:32:41 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 t_philo	*ft_lstnew(int id)
 {
@@ -71,4 +71,49 @@ t_philo	*initallphilos(t_data *data)
 		i++;
 	}
 	return (head);
+}
+
+t_philo *all_init(t_data *data, t_philo *philo)
+{
+	philo = initallphilos(data); // malloc philo linked list
+	if (!philo)
+		return (NULL);
+	philo = initmutix(data, philo); // malloc mutix array
+	if (!philo)
+		return (NULL); // some malloc or init failed
+	data->write = malloc(sizeof(pthread_mutex_t)); //malloc write mutix
+		if (!data->write)
+			return (NULL);
+	if (pthread_mutex_init(data->write, NULL) != 0)
+	{
+		write(2, "MUTEX INIT FAILLED\n", 20);
+		return (NULL);	
+	}
+	return (philo);
+}
+t_philo	*initmutix(t_data *data, t_philo *philo)
+{
+	pthread_mutex_t	*forks;
+	t_philo			*current;
+	int				i;
+	
+	forks = malloc(sizeof(pthread_mutex_t) * data->num);
+	if (!forks)
+		return (NULL);
+	i = 0;
+	while (i < data->num)
+		pthread_mutex_init(&forks[i++], NULL);
+	current = philo;
+	i = 1;
+	while (i <= data->num)
+	{
+		current->left_fork = &forks[i - 1];
+		if (i == data->num)
+			current->right_fork = &forks[0];
+		else
+			current->right_fork = &forks[i];
+		current = current->next;
+		i++;
+	}
+	return (philo);
 }

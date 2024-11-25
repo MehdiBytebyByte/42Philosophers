@@ -1,12 +1,11 @@
-
 NAME = Philosophers
-SRCS = main.c parse.c tools.c init.c routine.c
+SRCS = src/main.c src/parse.c src/tools.c src/init.c src/routine.c src/createnjoin.c
 
 OBJS = $(SRCS:.c=.o)
-# FLAGS = -Wall -Wextra -Werror
-HEADER = philo.h
+FLAGS = -Wall -Wextra -Werror
+HEADER = include/philo.h
 
-do: all clean
+# do: all clean
 all: $(NAME)
 %.o: %.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@ 
@@ -18,4 +17,4 @@ fclean: clean
 clean:
 	rm -f $(OBJS)
 re: fclean all
-.PHONY: clean
+.PHONY: clean all fclean re
