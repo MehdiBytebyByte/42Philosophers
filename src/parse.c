@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 02:32:02 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:39:46 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 07:51:12 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,11 @@ int	parse(int ac, char **av, t_data *data)
 		}
 		i++;
 	}
-	if (data->num < 2)
+	if (data->num < 1)
 		return (write (2, "INVALID PARAMETER(S)\n", 22), 1);
+	else if (data->num == 1)
+	{
+		// handle one philo
+	}
 	return (0);
 }

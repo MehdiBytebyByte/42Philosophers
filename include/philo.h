@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:35:47 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 09:11:56 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_data
 	long long		start_time;		//start time of the simulation
 	bool			dead;			//flag to check if a philo died	
 	pthread_mutex_t	*write;			//mutex for write
-	pthread_mutex_t	*increment;		//mutex for incrementing meals_eaten
+	pthread_mutex_t	*action;			//mutex for write
 }	t_data;
 typedef struct s_philo
 {

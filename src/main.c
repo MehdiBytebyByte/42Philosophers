@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:20:47 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:53:06 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 08:07:00 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,6 @@ void print_info(t_philo *philo, t_data *data)
 
 void	f(){system("leaks Philosophers");}
 
-void ifree(t_data *data, t_philo *philo)
-{
-	// TODO free all mallocs
-}
 
 
 int main(int ac, char **av)
@@ -64,27 +60,14 @@ int main(int ac, char **av)
 		return (write(2, "MALLOC FAILLED\n", 16), 1);
 	if (parse(ac, av, data))
 		return (free(data), 1);
-	philo = all_init(data, philo); // init data, philo, mutix
+	philo = all_init(data, philo);
+	// print_data(data);
+	// print_info(philo, data);
 	if (!philo)
-	{
-		// malloc or init failed
-		ifree(data, philo);
 		return (write(2, "Error\n", 7), 1);
-	}
-	return (0);
 	if (create_threads(philo) == NULL)
-		{
-			// thread creation failed
-			ifree(data, philo);
 			return (write(2, "Error\n", 7), 1);
-		}
 	if (join_threads(philo) == NULL)
-	{
-		// thread join failed
-		ifree(data, philo);
 		return (write(2, "Error\n", 7), 1);
-	}
-	ifree(data, philo);
-	// function to free all mallocs and destroy all mutix
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 05:56:26 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:32:41 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 09:36:40 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,56 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(philo->left_fork);
 }
 
+
+
+void	withoutflag(void	*arg)
+{
+	t_philo *philo;
+
+	philo = (t_philo *)arg;
+	while (1)
+		{
+			print_status(philo, "is thinking"); 
+			if (((get_current_time() - philo->last_meal ) > philo->data->dietime) || philo->data->dead)
+			{
+				print_status(philo, "died");
+				// add mutex here
+				pthread_mutex_lock(philo->data->action);
+				philo->data->dead = true;
+				pthread_mutex_unlock(philo->data->action);
+				break ;
+			}
+			eat(philo);
+			print_status(philo, "is sleeping");
+			usleep(philo->data->sleeptime * 1000);
+		}
+}
+void	withflag(void	*arg)
+{
+	t_philo *philo;
+
+	philo = (t_philo *)arg;
+	while (philo->meals_eaten < philo->data->meals)
+	{
+		print_status(philo, "is thinking");
+		if (((get_current_time() - philo->last_meal ) > philo->data->dietime) || philo->data->dead)
+		{
+			print_status(philo, "died");
+			pthread_mutex_lock(philo->data->action);
+			philo->data->dead = true;
+			pthread_mutex_unlock(philo->data->action);
+			break ;
+		}
+		eat(philo);
+		philo->meals_eaten++;
+		print_status(philo, "is sleeping");
+		usleep(philo->data->sleeptime * 1000);
+	}
+}
+
+
+
+
 void	*routine(void *arg)
 {
 	t_philo *philo;
@@ -42,26 +92,24 @@ void	*routine(void *arg)
 		flag = true;
 	if (philo->id % 2 == 0)
 	{
+		// we can use a mutex here
+		pthread_mutex_lock(philo->data->action);
+		if (philo->data->dietime < (philo->data->eatime / 2))
+		{
+			pthread_mutex_unlock(philo->data->action);
+			print_status(philo, "died");
+			pthread_mutex_lock(philo->data->action);
+			philo->data->dead = 1;
+			pthread_mutex_unlock(philo->data->action);
+		}
+		pthread_mutex_unlock(philo->data->action);
 		usleep(philo->data->eatime * 1000 / 2);
 	}
 	philo->last_meal = get_current_time();
-	// if (flag)
-	// {
-		while (1)
-		{
-			print_status(philo, "is thinking"); 
-			if (((get_current_time() - philo->last_meal ) > philo->data->dietime) || philo->data->dead)
-			{
-				// printf("time from the start = %lld\n", get_current_time() - philo->last_meal);
-				print_status(philo, "died");
-				philo->data->dead = true;
-				break ;
-			}
-			eat(philo);
-			print_status(philo, "is sleeping");
-			usleep(philo->data->sleeptime * 1000);
-		}
-	// }
+	if (!flag)
+		withoutflag(arg);
+	else
+		withflag(arg);
 return (NULL);
 }
 
@@ -70,12 +118,15 @@ void print_status(t_philo *philo, char *status)
 	long long current_time;
 	
 	current_time = get_current_time() - philo->data->start_time;
+	pthread_mutex_lock(philo->data->action);
 	pthread_mutex_lock(philo->data->write);
 	if (philo->data->dead)
 	{
+		pthread_mutex_unlock(philo->data->action);
 		pthread_mutex_unlock(philo->data->write);
 		return ;
 	}
+	pthread_mutex_unlock(philo->data->action);
 	printf("%lld %d %s\n", current_time, philo->id, status);
 	pthread_mutex_unlock(philo->data->write);
 }

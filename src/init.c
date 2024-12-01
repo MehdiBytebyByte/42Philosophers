@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:40:10 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 09:14:17 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,11 @@ t_philo *all_init(t_data *data, t_philo *philo)
 	data->write = malloc(sizeof(pthread_mutex_t)); //malloc write mutix
 		if (!data->write)
 			return (NULL);
-	if (pthread_mutex_init(data->write, NULL) != 0)
+	data->action = malloc(sizeof(pthread_mutex_t)); //malloc action mutix
+		if (!data->action)
+			return (NULL);
+	
+	if (pthread_mutex_init(data->write, NULL) != 0 || pthread_mutex_init(data->action, NULL) != 0)
 	{
 		write(2, "MUTEX INIT FAILLED\n", 20);
 		return (NULL);	

@@ -2,7 +2,7 @@ NAME = Philosophers
 SRCS = src/main.c src/parse.c src/tools.c src/init.c src/routine.c src/createnjoin.c
 
 OBJS = $(SRCS:.c=.o)
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
 # FLAGS = -Wall -Wextra -Werror  -g -fsanitize=address
 HEADER = include/philo.h
 
