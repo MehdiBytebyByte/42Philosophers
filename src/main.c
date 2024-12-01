@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:20:47 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 08:07:00 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 10:16:22 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,27 @@ void	f(){system("leaks Philosophers");}
 
 
 
+void	mutex_destroyer(t_data *data, t_philo *philo)
+{
+	pthread_mutex_destroy(data->action);
+	pthread_mutex_destroy(data->write);
+	while (philo)
+	{
+		pthread_mutex_destroy(philo->left_fork);
+		philo = philo->next;
+	};
+		
+}
+
 int main(int ac, char **av)
 {
 	t_data	*data;
 	t_philo	*philo;
 
-	// atexit(f);
+	atexit(f);
 	philo = NULL;
 	data = NULL;
-	data = malloc(sizeof(t_data));
+	data = safe_malloc(sizeof(t_data), 'a');
 	if (!data)
 		return (write(2, "MALLOC FAILLED\n", 16), 1);
 	if (parse(ac, av, data))
@@ -69,5 +81,7 @@ int main(int ac, char **av)
 			return (write(2, "Error\n", 7), 1);
 	if (join_threads(philo) == NULL)
 		return (write(2, "Error\n", 7), 1);
+	mutex_destroyer(data, philo);
+	safe_malloc(0, 'f');
 	return (0);
 }

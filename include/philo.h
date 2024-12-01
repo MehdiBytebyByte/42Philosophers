@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 09:11:56 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 09:53:47 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <stdbool.h>
+
+
+typedef struct s_garbage
+{
+	void				*adr;
+	struct s_garbage	*next;
+}	t_garbage;
+
 
 typedef struct s_data
 {
@@ -59,4 +67,5 @@ void		print_status(t_philo *philo, char *status);
 long long	get_current_time(void);
 t_philo		*create_threads(t_philo *philo);
 t_philo		*join_threads(t_philo *philo);
+void		*safe_malloc(size_t size, int flag);
 #endif

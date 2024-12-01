@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 09:14:17 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 09:53:01 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_philo	*ft_lstnew(int id)
 {
 	t_philo	*e1;
 
-	e1 = (t_philo *)malloc(sizeof(t_philo));
+	e1 = (t_philo *)safe_malloc(sizeof(t_philo), 'a');
 	if (!e1)
 		return (NULL);
 	e1->id = id;
@@ -82,10 +82,10 @@ t_philo *all_init(t_data *data, t_philo *philo)
 	philo = initmutix(data, philo); // malloc mutix array
 	if (!philo)
 		return (NULL); // some malloc or init failed
-	data->write = malloc(sizeof(pthread_mutex_t)); //malloc write mutix
+	data->write = safe_malloc(sizeof(pthread_mutex_t), 'a'); //malloc write mutix
 		if (!data->write)
 			return (NULL);
-	data->action = malloc(sizeof(pthread_mutex_t)); //malloc action mutix
+	data->action = safe_malloc(sizeof(pthread_mutex_t), 'a'); //malloc action mutix
 		if (!data->action)
 			return (NULL);
 	
@@ -102,7 +102,7 @@ t_philo	*initmutix(t_data *data, t_philo *philo)
 	t_philo			*current;
 	int				i;
 	
-	forks = malloc(sizeof(pthread_mutex_t) * data->num);
+	forks = safe_malloc(sizeof(pthread_mutex_t) * data->num, 'a');
 	if (!forks)
 		return (NULL);
 	i = 0;
