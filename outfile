@@ -1,0 +1,16 @@
+0 1 is thinking
+0 1 has taken a fork
+0 1 has taken a fork
+0 1 is eating
+1 3 is thinking
+20 2 is thinking
+20 2 has taken a fork
+32 1 is sleeping
+32 2 has taken a fork
+32 3 has taken a fork
+32 2 is eating
+64 1 is thinking
+64 2 is sleeping
+64 3 has taken a fork
+65 3 is eating
+64 1 died
