@@ -32,9 +32,7 @@ t_philo *create_threads(t_philo *philo)
 t_philo	*join_threads(t_philo *philo)
 {
 	t_philo *current;
-	int i;
 
-	i = 0;
 	current = philo;
 	while (current)
 	{

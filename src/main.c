@@ -54,6 +54,7 @@ void	mutex_destroyer(t_data *data, t_philo *philo)
 	while (philo)
 	{
 		pthread_mutex_destroy(philo->left_fork);
+		free(philo->left_fork);
 		philo = philo->next;
 	};
 		
@@ -64,7 +65,7 @@ int main(int ac, char **av)
 	t_data	*data;
 	t_philo	*philo;
 
-	atexit(f);
+	// atexit(f);
 	philo = NULL;
 	data = NULL;
 	data = safe_malloc(sizeof(t_data), 'a');
@@ -83,5 +84,7 @@ int main(int ac, char **av)
 		return (write(2, "Error\n", 7), 1);
 	mutex_destroyer(data, philo);
 	safe_malloc(0, 'f');
+	free(data->write);
+	free(data->action);
 	return (0);
 }
