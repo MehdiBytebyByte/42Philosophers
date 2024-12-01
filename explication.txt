@@ -1,0 +1,118 @@
+Chno hiya fork ?
+fork katsawb wa7ed child process li kaybda lkhedma fnfs lw9t diyal parent process kaykon identical lih mn ghir pid diyalo li kayban mbdl
+wakha fork ktreturni 0 makay3nich ana child pid diyalo zero (we can check this using getpid)
+
+memory in child
+--Stack--
+Each process gets its own stack
+Initial contents are identical to the parent's stack at the point of fork()
+Modifications to the stack in one process do not affect the other
+
+--heap--
+Initially shares the same physical memory pages
+When a process modifies a heap-allocated memory region, a copy is created ( wa7ed technique smiytha copy one write mechanism)
+Heap allocations (malloc, new) in one process do not affect the other
+
+
+--fou9ach fork ktfaili-- (returns -1)
+
+** Insufficient system resources (memory) **
+Physical RAM is exhausted
+Virtual memory (swap space) is full
+The process has reached its memory allocation limit
+The system's total memory allocation is near capacity
+
+
+**Maximum Number of Processes for the User**
+Unix-like systems kayferdo wa7ed limite diyal process:
+Number of processes a single user can run simultaneously
+Controlled by resource limits (ulimit)
+You can check these limits:
+Using ulimit -u in shell
+
+**chi merat system kayprotecti fork bomb**
+li katb9a ktforki a l'infinis hiya wa7ed naw3 diyal ddos attack
+t9dr diro b7al haka (PS MADIROCH FLMAC !!!!!)
+:(){ :|:& };:
+
+
+3lach kanforkiw 9bl execve ?
+execve ktbdl ldak lprocess (lcode stack w heap ) kayb9a ghi pid li hwa
+ila failat execve ktreturn -1 ila mafaillatch makatreturni walo (b7al executable /bin/ls)
+fou9ach t9dr tfailli ?
+File not found
+Insufficient permissions to execute the file
+Invalid binary format
+Not enough memory to load the new program
+
+dup and dup2
+
+int dup(int oldfd);
+
+dup katakhod parameter wa7ed wkatcopyih f fd jdid wkatreturnih dima katakhod a9al wa7ed free 
+for example 0,1 and 2 taken ghat7al f 3 ila kan 3 kayn gha t7al f4...
+dima fd jdid kaykoun 3ndo nfs offset diyal fd l9dim (for example readina 4 byte mn fd1)
+mnen ghadi n7alo fd2 bdup ghadi l9awh wasl fdik 4 byte
+(also returns -1 if it fails)
+it might fail for an invalid fd or process opened the maximum of fd it can opened
+
+int dup2(int oldfd, int newfd);
+
+dup2 katkhalik nta t7adad f ina fd baghi t7al ou ila kan deja m7loul ktsdo wt3awd t7ello wmakat3tikch asghar wa7ed
+ps 7ta hiya ktkoun 3ndha nfs offset as explained before on succes returns the fd on failure returns -1
+
+Key Differences:
+
+File Descriptor Specification:
+dup(): Automatically chooses the lowest unused file descriptor
+dup2(): Allows you to specify the exact file descriptor number
+
+Handling Existing File Descriptors:
+dup(): Cannot replace an existing file descriptor
+dup2(): Will close the target file descriptor if it's already in use
+
+sighandler_t signal(int signum, sighandler_t handler);
+
+signal function katkhalik tkheli tbadal behaviour diyal chi signal
+
+-on succes katreturni dik function pointer 3la chakl struct sighandler_t
+-On FAILURE: Returns SIG_ERR (a special macro that indicates an error)
+Typically sets errno to indicate the specific error
+
+stat() function:
+stat function kt3tiha wa7ed path diyal chi file ou hiya ktjbd informations 3la dak file wkat7athom fwa7ed struct
+m3loumat b7al:
+File size
+File permissions
+Owner and group IDs
+Last access, modification, and status change times
+Number of hard links
+Inode number
+fach kt7athom fdik struct nta katkhadam some macors bach t3rf dok informations for example wach had file folder or regular file
+wach 3endo permissions etc...
+
+Return values:
+On success: Returns 0
+On failure: Returns -1
+
+t9dr tfailli for the following reasons
+File or path doesn't exist
+Insufficient permissions to access the file
+Invalid path or filename
+File system errors
+Memory allocation issues
+
+access katdir nfs l7aja walaken bdaraja a9al kt9dr tchecki biha wach file kayn ou chno permissions li 3endo had permissions katcheckihom bhad flags
+F_OK (0): Test for file existence
+R_OK (4): Test for read permission
+W_OK (2): Test for write permission
+X_OK (1): Test for execute permission
+You can combine these flags using bitwise OR
+When it fails:
+
+File does not exist (when using F_OK)
+Insufficient permissions for the requested mode
+Path is invalid
+Symbolic link issues
+File system errors
+

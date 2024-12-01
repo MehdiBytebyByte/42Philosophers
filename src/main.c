@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:20:47 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 10:16:22 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 11:01:50 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	mutex_destroyer(t_data *data, t_philo *philo)
 	while (philo)
 	{
 		pthread_mutex_destroy(philo->left_fork);
-		free(philo->left_fork);
+		// free(philo->left_fork);
 		philo = philo->next;
 	};
 		
@@ -70,21 +70,22 @@ int main(int ac, char **av)
 	data = NULL;
 	data = safe_malloc(sizeof(t_data), 'a');
 	if (!data)
+	{
+		safe_malloc(0, 'f');
 		return (write(2, "MALLOC FAILLED\n", 16), 1);
+	}
 	if (parse(ac, av, data))
-		return (free(data), 1);
+		return (safe_malloc(0, 'f'), 1);
 	philo = all_init(data, philo);
 	// print_data(data);
 	// print_info(philo, data);
 	if (!philo)
-		return (write(2, "Error\n", 7), 1);
+		return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
 	if (create_threads(philo) == NULL)
-			return (write(2, "Error\n", 7), 1);
+			return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
 	if (join_threads(philo) == NULL)
-		return (write(2, "Error\n", 7), 1);
+		return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
 	mutex_destroyer(data, philo);
 	safe_malloc(0, 'f');
-	free(data->write);
-	free(data->action);
 	return (0);
 }
