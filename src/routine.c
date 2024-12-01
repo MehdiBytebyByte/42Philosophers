@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 05:56:26 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 09:36:40 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 11:45:04 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,8 @@ void	*routine(void *arg)
 	if (philo->id % 2 == 0)
 	{
 		// we can use a mutex here
-		pthread_mutex_lock(philo->data->action);
-		if (philo->data->dietime < (philo->data->eatime / 2))
-		{
-			pthread_mutex_unlock(philo->data->action);
-			print_status(philo, "died");
-			pthread_mutex_lock(philo->data->action);
-			philo->data->dead = 1;
-			pthread_mutex_unlock(philo->data->action);
-		}
-		pthread_mutex_unlock(philo->data->action);
-		usleep(philo->data->eatime * 1000 / 2);
+		print_status(philo, "is thinking");
+		usleep(philo->data->eatime * 1000);
 	}
 	philo->last_meal = get_current_time();
 	if (!flag)

@@ -1,9 +1,10 @@
-NAME = Philosophers
+NAME = philo
 SRCS = src/main.c src/parse.c src/tools.c src/init.c src/routine.c src/createnjoin.c src/garbageco.c
 
 OBJS = $(SRCS:.c=.o)
-FLAGS = -Wall -Wextra -Werror -g -pthread
-# FLAGS = -Wall -Wextra -Werror  -g -fsanitize=address
+# FLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+# FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror  -g -fsanitize=thread
 HEADER = include/philo.h
 CC = gcc
 

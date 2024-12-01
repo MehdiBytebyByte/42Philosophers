@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 02:28:22 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:32:41 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:04:00 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_philo *create_threads(t_philo *philo)
 	t_philo *current;
 
 	current = philo;
+	// return (NULL);
 	while (current)
 	{
 		if (pthread_create(&current->thread, NULL, &routine,(void *)current) == -1)
@@ -27,6 +28,12 @@ t_philo *create_threads(t_philo *philo)
 		current = current->next;
 	}
 	return (philo);
+}
+
+int	monitor(t_philo *philo, t_data *data)
+{
+	
+	return (0);
 }
 
 t_philo	*join_threads(t_philo *philo)
@@ -42,5 +49,7 @@ t_philo	*join_threads(t_philo *philo)
 			return (NULL);
 		}
 		current = current->next;
-	}return (philo);
+	}
+	
+	return (philo);
 }
