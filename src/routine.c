@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 05:56:26 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/02 14:09:07 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:12:47 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,18 @@ void	*routine(void *arg)
 	}
 	while (1)
 	{
+		pthread_mutex_lock(philo->data->action);
+		if (philo->finished == 1)
+			return (pthread_mutex_unlock(philo->data->action), (void *)0);
+		pthread_mutex_unlock(philo->data->action);
 		if (check_death(philo)) //check
 			return (NULL);
 		eat(philo);		//eat
-		if (check_death(philo)) //check
-			return (NULL);
 		pthread_mutex_lock(philo->data->action);   // AAAA
 		philo->meals_eaten++;
 		pthread_mutex_unlock(philo->data->action); // AAAA
+		if (check_death(philo)) //check
+			return (NULL);
 		print_status(philo, "is sleeping");
 		ft_usleep(philo->data->sleeptime);
 		print_status(philo, "is thinking");

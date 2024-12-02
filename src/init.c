@@ -6,39 +6,23 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/02 10:39:41 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:33:24 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-t_philo	*ft_lstnew(int id)
+void	inithelper(t_philo	*current, int i, t_data	*data)
 {
-	t_philo	*e1;
-
-	e1 = (t_philo *)safe_malloc(sizeof(t_philo), 'a');
-	if (!e1)
-		return (NULL);
-	e1->id = id;
-	e1->next = NULL;
-	return (e1);
-}
-
-void	ft_lstadd_back(t_philo **lst, t_philo *new)
-{
-	t_philo	*current;
-
-	if (!new || !lst)
-		return ;
-	current = *lst;
-	if (!current)
+	while (i <= data->num)
 	{
-		*lst = new;
-		return ;
-	}
-	while (current->next != NULL)
+		current->finished = false;
+		current->data = data;
+		current->last_meal = 0;
+		current->data->dead = false;
 		current = current->next;
-	current->next = new;
+		i++;
+	}
 }
 
 t_philo	*initallphilos(t_data *data)
@@ -54,7 +38,7 @@ t_philo	*initallphilos(t_data *data)
 		return (NULL);
 	while (i < data->num)
 	{
-		current = ft_lstnew(i + 1);  //we allocate here
+		current = ft_lstnew(i + 1);
 		if (!current)
 			return (NULL);
 		ft_lstadd_back(&head, current);
@@ -63,45 +47,39 @@ t_philo	*initallphilos(t_data *data)
 	current->next = NULL;
 	i = 1;
 	current = head;
-	while (i <= data->num)
-	{
-		current->data = data;
-		current->last_meal = 0;
-		current->data->dead = false;
-		current = current->next;
-		i++;
-	}
+	inithelper(current, i, data);
 	return (head);
 }
 
-t_philo *all_init(t_data *data, t_philo *philo)
+t_philo	*all_init(t_data *data, t_philo *philo)
 {
-	philo = initallphilos(data); // malloc philo linked list
+	philo = initallphilos(data);
 	if (!philo)
 		return (NULL);
-	philo = initmutix(data, philo); // malloc mutix array
+	philo = initmutix(data, philo);
 	if (!philo)
-		return (NULL); // some malloc or init failed
-	data->write = safe_malloc(sizeof(pthread_mutex_t), 'a'); //malloc write mutix
-		if (!data->write)
-			return (NULL);
-	data->action = safe_malloc(sizeof(pthread_mutex_t), 'a'); //malloc action mutix
-		if (!data->action)
-			return (NULL);
-	
-	if (pthread_mutex_init(data->write, NULL) != 0 || pthread_mutex_init(data->action, NULL) != 0)
+		return (NULL);
+	data->write = safe_malloc(sizeof(pthread_mutex_t), 'a');
+	if (!data->write)
+		return (NULL);
+	data->action = safe_malloc(sizeof(pthread_mutex_t), 'a');
+	if (!data->action)
+		return (NULL);
+	if (pthread_mutex_init(data->write, NULL) != 0
+		|| pthread_mutex_init(data->action, NULL) != 0)
 	{
 		write(2, "MUTEX INIT FAILLED\n", 20);
-		return (NULL);	
+		return (NULL);
 	}
 	return (philo);
 }
+
 t_philo	*initmutix(t_data *data, t_philo *philo)
 {
 	pthread_mutex_t	*forks;
 	t_philo			*current;
 	int				i;
-	
+
 	forks = safe_malloc(sizeof(pthread_mutex_t) * data->num, 'a');
 	if (!forks)
 		return (NULL);

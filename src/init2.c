@@ -1,20 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   one_philo.c                                        :+:      :+:    :+:   */
+/*   init2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 15:49:27 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/02 15:49:50 by mboughra         ###   ########.fr       */
+/*   Created: 2024/12/02 15:29:25 by mboughra          #+#    #+#             */
+/*   Updated: 2024/12/02 15:30:14 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	one_philo(t_data	*data)
+t_philo	*ft_lstnew(int id)
 {
-	(void)data;
-	printf("NOT HANDLED YET\n");
-	exit(1);
+	t_philo	*e1;
+
+	e1 = (t_philo *)safe_malloc(sizeof(t_philo), 'a');
+	if (!e1)
+		return (NULL);
+	e1->id = id;
+	e1->next = NULL;
+	return (e1);
+}
+
+void	ft_lstadd_back(t_philo **lst, t_philo *new)
+{
+	t_philo	*current;
+
+	if (!new || !lst)
+		return ;
+	current = *lst;
+	if (!current)
+	{
+		*lst = new;
+		return ;
+	}
+	while (current->next != NULL)
+		current = current->next;
+	current->next = new;
 }

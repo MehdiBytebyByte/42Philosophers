@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 02:32:02 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 11:34:57 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:49:20 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,12 @@ t_data	*setter(t_data *data, int i, int holder)
 	return (data);
 }
 
-int	parse(int ac, char **av, t_data *data)
+int	parse2(int ac, char	**av, t_data *data)
 {
 	int	holder;
 	int	i;
 
 	i = 1;
-	if (ac != 5 && ac != 6)
-		return (write(2, "INVALID PARAMETER(S)\n", 22), 1);
-	if (ac == 5)
-		data->meals = -1;
 	while (i != ac)
 	{
 		if (parsechar(av[i]))
@@ -71,11 +67,22 @@ int	parse(int ac, char **av, t_data *data)
 		}
 		i++;
 	}
+	return (0);
+}
+
+int	parse(int ac, char **av, t_data *data)
+{
+	if (ac != 5 && ac != 6)
+		return (write(2, "INVALID PARAMETER(S)\n", 22), 1);
+	if (ac == 5)
+		data->meals = -1;
+	if (parse2(ac, av, data) == -1)
+		return (-1);
 	if (data->num < 1)
 		return (write (2, "INVALID PARAMETER(S)\n", 22), 1);
-	// else if (data->num == 1)
-	// {
-	// 	// handle one philo
-	// }
+	else if (data->num == 1)
+	{
+		one_philo(data);
+	}
 	return (0);
 }
