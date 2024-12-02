@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 09:53:01 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:39:41 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_philo	*initallphilos(t_data *data)
 	t_philo	*current;
 	int		i;	
 
-	data->start_time = get_current_time();
+	data->start_time = 0;
 	i = 1;
 	head = ft_lstnew(1);
 	if (!head)

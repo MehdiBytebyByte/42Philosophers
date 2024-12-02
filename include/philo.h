@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 09:53:47 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:24:22 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,16 @@ t_data		*setter(t_data *data, int i, int holder);
 t_philo		*all_init(t_data *data, t_philo *philo);
 t_philo		*initmutix(t_data *data, t_philo *philo);
 void		*routine(void	*arg);
-void		print_status(t_philo *philo, char *status);
 long long	get_current_time(void);
 t_philo		*create_threads(t_philo *philo);
 t_philo		*join_threads(t_philo *philo);
 void		*safe_malloc(size_t size, int flag);
+void		ft_usleep(long time);
+void		print_status(t_philo *philo, char *status);
+int			monitor(t_philo *philo);
+
+
+
+// DETELETE ME
+void	print_data(t_data *data);
 #endif
