@@ -1,6 +1,6 @@
 NAME = philo
-SRCS = main.c src/parse.c src/tools.c src/init.c src/routine.c src/createnjoin.c src/garbageco.c \
-		src/ft_usleep.c
+SRCS = main.c src/parse.c src/tools.c src/init.c src/init2.c src/routine.c src/createnjoin.c src/garbageco.c \
+		src/ft_usleep.c src/one_philo.c
 
 OBJS = $(SRCS:.c=.o)
 # FLAGS = -Wall -Wextra -Werror -g -fsanitize=thread

@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/02 11:24:22 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:48:34 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_philo
 	pthread_t		thread;			//thread of philo
 	pthread_mutex_t	*left_fork;		//left fork of philo
 	pthread_mutex_t	*right_fork;	//right fork of philo
+	bool			finished;
 	t_data			*data;			//pointer to data (shared by all philos)
 	struct s_philo	*next;
 }	t_philo;
@@ -70,6 +71,7 @@ void		*safe_malloc(size_t size, int flag);
 void		ft_usleep(long time);
 void		print_status(t_philo *philo, char *status);
 int			monitor(t_philo *philo);
+void		one_philo(t_data	*data);
 
 
 
