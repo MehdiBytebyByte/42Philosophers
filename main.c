@@ -6,12 +6,11 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:20:47 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 11:01:50 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:55:32 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
-#include <stdlib.h>
+#include "include/philo.h"
 
 /* memset, printf, malloc, free, write,
 usleep, gettimeofday, pthread_create,
@@ -25,7 +24,23 @@ void	print_data(t_data *data)
 	printf("eatime = %d\n", data->eatime);
 	printf("sleeptime = %d\n", data->sleeptime);
 	printf("meals = %d\n", data->meals);
+	printf("start --> %lld\n",data->start_time);
+	printf("BOOL --> %d\n",data->dead);
 }
+
+
+/*typedef struct s_data
+{
+	int				num;			//number of philo
+	int				dietime;		//time to die if philo didn't eat
+	int				eatime;			//time to eat
+	int				sleeptime;		//time to sleep
+	int				meals;			//number of meals each philo should eat if -1 infinite
+	long long		start_time;		//start time of the simulation
+	bool			dead;			//flag to check if a philo died	
+	pthread_mutex_t	*write;			//mutex for write
+	pthread_mutex_t	*action;			//mutex for write
+}	t_data;*/
 
 void print_info(t_philo *philo, t_data *data)
 {
@@ -83,6 +98,7 @@ int main(int ac, char **av)
 		return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
 	if (create_threads(philo) == NULL)
 			return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
+	monitor(philo);
 	if (join_threads(philo) == NULL)
 		return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
 	mutex_destroyer(data, philo);
