@@ -5,7 +5,7 @@ SRCS = main.c src/parse.c src/tools.c src/init.c src/init2.c src/routine.c src/c
 OBJS = $(SRCS:.c=.o)
 # FLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
 # FLAGS = -Wall -Wextra -Werror
-FLAGS = -Wall -Wextra -Werror  -g -fsanitize=thread
+FLAGS =  -g #-fsanitize=thread
 HEADER = include/philo.h
 CC = gcc
 

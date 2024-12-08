@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 02:28:22 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/02 15:19:27 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/08 16:22:15 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,71 @@ t_philo *create_threads(t_philo *philo)
 	return (philo);
 }
 
+static void	no_meals(t_philo *philo)
+{
+	t_philo *tmp;
+	
+	tmp = philo;
+	while (tmp)
+	{
+		tmp->last_meal = get_current_time();
+		tmp = tmp->next;
+	}
+	tmp = philo;
+	while (1)
+	{
+		pthread_mutex_lock(tmp->data->action);
+		if((get_current_time() - tmp->last_meal ) > tmp->data->dietime)
+		{
+			tmp->data->dead = 1;
+			pthread_mutex_unlock(tmp->data->action);
+			print_status(tmp, "died");
+			break;
+		}
+		pthread_mutex_unlock(tmp->data->action);
+		if (tmp->next == NULL)
+			tmp = philo;
+		else
+			tmp = tmp->next;
+	}
+}
+
+static void meals(t_philo *philo)
+{
+	t_philo *tmp;
+	
+	tmp = philo;
+	while (tmp)
+	{
+		tmp->last_meal = get_current_time();
+		tmp = tmp->next;
+	}
+	tmp = philo;
+	while (1)
+	{
+		pthread_mutex_lock(tmp->data->action);
+		if((get_current_time() - tmp->last_meal ) > tmp->data->dietime)
+		{
+			tmp->data->dead = 1;
+			pthread_mutex_unlock(tmp->data->action);
+			print_status(tmp, "died");
+			break;
+		}
+		if(philo->meals_eaten > philo->data->meals)
+		{
+			tmp->data->dead = 1;
+			pthread_mutex_unlock(tmp->data->action);
+			break;
+		}
+		pthread_mutex_unlock(tmp->data->action);
+		if (tmp->next == NULL)
+			tmp = philo;
+		else
+			tmp = tmp->next;
+	}
+}
+	
+
 int	monitor(t_philo *philo)
 {
 	t_philo	*tmp;
@@ -42,31 +107,16 @@ int	monitor(t_philo *philo)
 	pthread_mutex_lock(philo->data->action);
 	philo->data->start_time = get_current_time();
 	pthread_mutex_unlock(philo->data->action);
-	while (tmp)
+	if (!flag)
+		no_meals(philo);
+	else
 	{
-		tmp->last_meal = get_current_time();
-		tmp = tmp->next;
-	}
-	while (1)
-	{
-		tmp = philo;
-		pthread_mutex_lock(tmp->data->action); // AAAAAAA  (OPEN)
-		if (((get_current_time() - philo->last_meal ) > philo->data->dietime))
-		{
-			pthread_mutex_unlock(tmp->data->action);   // AAAA AAA (CLOSE)
-			print_status(philo, "died");
-			pthread_mutex_lock(tmp->data->action); // BBBBBBB (OPEN)
-			tmp->data->dead = 1;
-			pthread_mutex_unlock(tmp->data->action); // BBBBBBB (CLOSE)
-			break;
-		}
-		pthread_mutex_unlock(tmp->data->action); // AAAAAAA (CLOSE)]
-		if (tmp->next == NULL)
-			continue ;
-		tmp = tmp->next;
+		meals(philo);
 	}
 	return (0);
 }
+
+
 
 t_philo	*join_threads(t_philo *philo)
 {
@@ -82,6 +132,7 @@ t_philo	*join_threads(t_philo *philo)
 		}
 		current = current->next;
 	}
+
 	
 	return (philo);
 }

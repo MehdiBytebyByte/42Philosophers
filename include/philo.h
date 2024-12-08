@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/02 15:48:34 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/08 11:14:34 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,11 @@ long long	get_current_time(void);
 t_philo		*create_threads(t_philo *philo);
 t_philo		*join_threads(t_philo *philo);
 void		*safe_malloc(size_t size, int flag);
-void		ft_usleep(long time);
+void		ft_usleep(long time, t_philo	*philo);
 void		print_status(t_philo *philo, char *status);
 int			monitor(t_philo *philo);
 void		one_philo(t_data	*data);
+bool	check_death(t_philo	*philo);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 09:47:51 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/01 09:48:46 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:28:43 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	*safe_malloc(size_t size, int flag)
 		if (!address)
 		{
 			safe_malloc(0, 'f');
-			exit (0);
+			exit (0);  //TODO: change to return (NULL);
 		}
 		if (garbage == NULL)
 			garbage = create_new(address);

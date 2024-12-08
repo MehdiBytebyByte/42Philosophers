@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:20:47 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/02 15:48:55 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:32:17 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	print_info(t_philo *philo, t_data *data)
 		temp = temp->next;
 	}
 }
+
+
 
 void	mutex_destroyer(t_data *data, t_philo *philo)
 {
