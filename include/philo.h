@@ -75,13 +75,15 @@ void		*routine(void	*arg);
 long long	get_current_time(void);
 t_philo		*create_threads(t_philo *philo);
 t_philo		*join_threads(t_philo *philo);
-void		*safe_malloc(size_t size, int flag);
+void		*galloc(size_t size, int flag);
 void		ft_usleep(long time, t_philo	*philo);
 void		print_status(t_philo *philo, int status);
 int			monitor(t_philo *philo);
 void		one_philo(t_data	*data);
 bool		check_death(t_philo	*philo);
 int			ft_strcmp(char	*s1, char	*s2);
+
+
 
 
 

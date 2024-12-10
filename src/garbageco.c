@@ -1,89 +1,74 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   garbageco.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/01 09:47:51 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/07 17:28:43 by mboughra         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../include/philo.h"
-
-static void	node_add(t_garbage **lst, t_garbage *new)
+static void list_add(t_garbage **list, t_garbage *new_item)
 {
-	t_garbage	*lastone;
-
-	if (!lst || !new)
+	t_garbage *last;
+	if (!list || !new_item)
 		return ;
-	if (!(*lst))
+	if (!(*list))
 	{
-		*lst = new;
+		*list = new_item;
 		return ;
 	}
-	lastone = *lst;
-	while (lastone->next)
-		lastone = lastone->next;
-	lastone->next = new;
-	new->next = NULL;
+	last = *list;
+	while (last->next)
+		last = last->next;
+	last->next = new_item;
+	new_item->next = NULL;
 }
 
-static t_garbage	*create_new(void *address)
+static t_garbage *make_node(void *ptr)
 {
-	t_garbage	*newnode;
-
-	newnode = malloc(sizeof(t_garbage));
-	if (newnode == NULL)
+	t_garbage *node;
+	node = malloc(sizeof(t_garbage));
+	if (node == NULL)
 	{
-		perror("malloc");
+		printf("malloc failled \n");
 		return (NULL);
 	}
-	newnode->adr = address;
-	newnode->next = NULL;
-	return (newnode);
+	node->adr = ptr;
+	node->next = NULL;
+	return (node);
 }
 
-static void	free_list(t_garbage **head)
+static void clear_list(t_garbage **head)
 {
-	t_garbage	*current;
-	t_garbage	*next;
-
-	current = *head;
-	while (current != NULL)
+	t_garbage *curr;
+	t_garbage *next;
+	curr = *head;
+	while (curr != NULL)
 	{
-		next = current->next;
-		free(current->adr);
-		current->adr = NULL;
-		current = next;
+		next = curr->next;
+		free(curr->adr);
+		curr->adr = NULL;
+		curr = next;
 	}
 }
 
-void	*safe_malloc(size_t size, int flag)
+void *galloc(size_t size, int mode)
 {
-	static t_garbage	*garbage;
+	static t_garbage	*tracker;
 	t_garbage			*node;
-	void				*address;
-
-	address = NULL;
-	if (flag == 'a')
+	void				*ptr;
+	
+	ptr = NULL;
+	if (mode == 'a')
 	{
-		address = malloc(size);
-		if (!address)
+		ptr = malloc(size);
+		if (!ptr)
 		{
-			safe_malloc(0, 'f');
-			exit (0);  //TODO: change to return (NULL);
+			galloc(0, 'f');
+			return (NULL);
 		}
-		if (garbage == NULL)
-			garbage = create_new(address);
+		if (tracker == NULL)
+			tracker = make_node(ptr);
 		else
 		{
-			node = create_new(address);
-			node_add(&garbage, node);
+			node = make_node(ptr);
+			list_add(&tracker, node);
 		}
 	}
-	else if (flag == 'f')
-		free_list(&garbage);
-	return (address);
+	else if (mode == 'f')
+		clear_list(&tracker);
+	return (ptr);
 }
