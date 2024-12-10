@@ -20,18 +20,16 @@ void ft_usleep(long time, t_philo *philo)
 	unsigned long long old;
 
 	old = get_current_time();
-	if (check_death(philo))
-		return ;
 	while (get_current_time() - old <= time)
 	{
-		pthread_mutex_lock(philo->data->action); //that
+		pthread_mutex_lock(philo->data->action);
 		if (philo->data->dead)
 		{
 			pthread_mutex_unlock(philo->data->action);  //that
 			return ;
 		}
 		pthread_mutex_unlock(philo->data->action);  //that
-		usleep(100);
+		usleep(10);
 	}
 }
 // void ft_usleep(long time, t_philo *philo)
@@ -39,7 +37,7 @@ void ft_usleep(long time, t_philo *philo)
 // 	long old = get_current_time();
 
 // 	while (get_current_time() - old <= time)
-// 	{
+// 	{ 
 // 		pthread_mutex_lock(philo->data->action); //that
 // 		if ((get_current_time() - philo->last_meal) > philo->data->dietime)
 // 		{

@@ -61,7 +61,7 @@ static void	no_meals(t_philo *philo)
 static void meals(t_philo *philo)
 {
 	t_philo *tmp;
-	
+
 	tmp = philo;
 	while (tmp)
 	{
@@ -79,7 +79,7 @@ static void meals(t_philo *philo)
 			print_status(tmp, "died");
 			break;
 		}
-		if(philo->meals_eaten > philo->data->meals)
+		if(tmp->meals_eaten > tmp->data->meals)
 		{
 			tmp->data->dead = 1;
 			pthread_mutex_unlock(tmp->data->action);
@@ -87,9 +87,12 @@ static void meals(t_philo *philo)
 		}
 		pthread_mutex_unlock(tmp->data->action);
 		if (tmp->next == NULL)
+		{
 			tmp = philo;
+		}
 		else
 			tmp = tmp->next;
+		usleep(100);
 	}
 }
 	

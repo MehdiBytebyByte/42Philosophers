@@ -49,3 +49,13 @@ int	ft_atoi(const char *str)
 	}
 	return (re * s);
 }
+
+int	ft_strcmp(char	*s1, char	*s2)
+{
+	size_t			i;
+	
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}

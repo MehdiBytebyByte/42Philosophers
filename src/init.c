@@ -20,6 +20,7 @@ void	inithelper(t_philo	*current, int i, t_data	*data)
 		current->data = data;
 		current->last_meal = 0;
 		current->data->dead = false;
+		current->meals_eaten = 0;
 		current = current->next;
 		i++;
 	}
