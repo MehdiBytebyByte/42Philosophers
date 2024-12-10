@@ -12,21 +12,15 @@
 
 #include "../include/philo.h"
 
-void	*routineofone(void	*arg)
-{
-	t_data *data;
-	t_philo	*philo;
-	pthread_mutex_t mutix;
+// void	*routineofone(void	*arg)
+// {
+// 	t_data *data;
+// 	t_philo	*philo;
 
-	pthread_mutex_init(&mutix, NULL);
-	philo->id = 1;
-	data = (t_data *)arg;
-	print_status(philo, "is thinking");
-	return (NULL);
-}
+// 	return (NULL);
+// }
 
-void	one_philo(t_data	*data)
-{
-	pthread_t *philo;
-	pthread_create(philo, NULL, &routineofone, (void *)data);
-}
+// void	one_philo(t_data	*data)
+// {
+// 	ft_us
+// }
