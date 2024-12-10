@@ -63,13 +63,13 @@ t_philo	*all_init(t_data *data, t_philo *philo)
 	philo = initmutix(data, philo);
 	if (!philo)
 		return (NULL);
-	data->write = safe_malloc(sizeof(pthread_mutex_t), 'a');
+	data->write = galloc(sizeof(pthread_mutex_t), 'a');
 	if (!data->write)
 		return (NULL);
-	data->action = safe_malloc(sizeof(pthread_mutex_t), 'a');
+	data->action = galloc(sizeof(pthread_mutex_t), 'a');
 	if (!data->action)
 		return (NULL);
-	data->check_death = safe_malloc(sizeof(pthread_mutex_t), 'a');
+	data->check_death = galloc(sizeof(pthread_mutex_t), 'a');
 	if (!data->check_death)
 		return (NULL);
 	if (pthread_mutex_init(data->write, NULL) != 0
@@ -88,7 +88,7 @@ t_philo	*initmutix(t_data *data, t_philo *philo)
 	t_philo			*current;
 	int				i;
 
-	forks = safe_malloc(sizeof(pthread_mutex_t) * data->num, 'a');
+	forks = galloc(sizeof(pthread_mutex_t) * data->num, 'a');
 	if (!forks)
 		return (NULL);
 	i = 0;

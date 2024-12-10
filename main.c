@@ -59,23 +59,23 @@ int	main(int ac, char **av)
 
 	philo = NULL;
 	data = NULL;
-	data = safe_malloc(sizeof(t_data), 'a');
+	data = galloc(sizeof(t_data), 'a');
 	if (!data)
 	{
-		safe_malloc(0, 'f');
+		galloc(0, 'f');
 		return (write(2, "MALLOC FAILLED\n", 16), 1);
 	}
 	if (parse(ac, av, data))
-		return (safe_malloc(0, 'f'), 1);
+		return (galloc(0, 'f'), 1);
 	philo = all_init(data, philo);
 	if (!philo)
-		return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
+		return (write(2, "Error\n", 7), galloc(0, 'f'), 1);
 	if (create_threads(philo) == NULL)
-		return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
+		return (write(2, "Error\n", 7), galloc(0, 'f'), 1);
 	monitor(philo);
 	if (join_threads(philo) == NULL)
-		return (write(2, "Error\n", 7), safe_malloc(0, 'f'), 1);
+		return (write(2, "Error\n", 7), galloc(0, 'f'), 1);
 	mutex_destroyer(data, philo);
-	safe_malloc(0, 'f');
+	galloc(0, 'f');
 	return (0);
 }

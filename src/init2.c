@@ -16,7 +16,7 @@ t_philo	*ft_lstnew(int id)
 {
 	t_philo	*e1;
 
-	e1 = (t_philo *)safe_malloc(sizeof(t_philo), 'a');
+	e1 = (t_philo *)galloc(sizeof(t_philo), 'a');
 	if (!e1)
 		return (NULL);
 	e1->id = id;
