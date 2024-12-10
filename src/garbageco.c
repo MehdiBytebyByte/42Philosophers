@@ -1,5 +1,6 @@
 
 #include "../include/philo.h"
+
 static void list_add(t_garbage **list, t_garbage *new_item)
 {
 	t_garbage *last;
