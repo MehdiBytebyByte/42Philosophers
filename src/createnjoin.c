@@ -47,7 +47,7 @@ static void	no_meals(t_philo *philo)
 		{
 			tmp->data->dead = 1;
 			pthread_mutex_unlock(tmp->data->action);
-			print_status(tmp, "died");
+			print_status(tmp, DEAD);
 			break;
 		}
 		pthread_mutex_unlock(tmp->data->action);
@@ -76,7 +76,7 @@ static void meals(t_philo *philo)
 		{
 			tmp->data->dead = 1;
 			pthread_mutex_unlock(tmp->data->action);
-			print_status(tmp, "died");
+			print_status(tmp, DEAD);
 			break;
 		}
 		if(tmp->meals_eaten > tmp->data->meals)

@@ -19,6 +19,12 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
+# define FORK 1
+# define EAT 2
+# define SLEEP 3
+# define THINK 4
+# define DEAD 42
+
 
 typedef struct s_garbage
 {
@@ -40,6 +46,7 @@ typedef struct s_data
 	pthread_mutex_t	*action;		//mutex for write
 	pthread_mutex_t	*check_death;	//ne more mutex
 }	t_data;
+
 typedef struct s_philo
 {
 	int				id;				//id of philo
@@ -70,7 +77,7 @@ t_philo		*create_threads(t_philo *philo);
 t_philo		*join_threads(t_philo *philo);
 void		*safe_malloc(size_t size, int flag);
 void		ft_usleep(long time, t_philo	*philo);
-void		print_status(t_philo *philo, char *status);
+void		print_status(t_philo *philo, int status);
 int			monitor(t_philo *philo);
 void		one_philo(t_data	*data);
 bool		check_death(t_philo	*philo);
