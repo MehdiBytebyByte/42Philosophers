@@ -38,7 +38,7 @@ typedef struct s_data
 	bool			dead;			//flag to check if a philo died	
 	pthread_mutex_t	*write;			//mutex for write
 	pthread_mutex_t	*action;		//mutex for write
-	pthread_mutex_t	*check_death;	//one more mutex
+	pthread_mutex_t	*check_death;	//ne more mutex
 }	t_data;
 typedef struct s_philo
 {
@@ -73,7 +73,8 @@ void		ft_usleep(long time, t_philo	*philo);
 void		print_status(t_philo *philo, char *status);
 int			monitor(t_philo *philo);
 void		one_philo(t_data	*data);
-bool	check_death(t_philo	*philo);
+bool		check_death(t_philo	*philo);
+int			ft_strcmp(char	*s1, char	*s2);
 
 
 

@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <stdbool.h>
-
-
 
 void	eat(t_philo *philo)
 {
@@ -27,7 +24,6 @@ void	eat(t_philo *philo)
 	}
 	pthread_mutex_lock(philo->right_fork);
 	print_status(philo, "has taken a fork");
-	
 	print_status(philo, "is eating");
 	pthread_mutex_lock(philo->data->action);
 	philo->last_meal = get_current_time();
@@ -38,26 +34,43 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(philo->left_fork);
 }
 
-#include <string.h>
-
 void print_status(t_philo *philo, char *status)
 {
-	long long current_time;
-	
-	current_time = get_current_time() - philo->data->start_time;
-	if (strcmp(status, "died") == 0)
-	{
-		printf("%lld %d %s\n", current_time, philo->id, status);
-		return ;
-	}
-	if (!check_death(philo))
-	{
-		pthread_mutex_lock(philo->data->write);
-		printf("%lld %d %s\n", current_time, philo->id, status);
-		pthread_mutex_unlock(philo->data->write);
-	}
-	
+
+	long long time;
+
+	time = get_current_time() - philo->data->start_time;
+	pthread_mutex_lock(philo->data->write);
+	if (ft_strcmp("died", status) == 0)
+		printf("%lld %d %s\n", time, philo->id, "died");
+	else if (ft_strcmp("has taken a fork", status) == 0 && !check_death(philo))
+		printf("%lld %d %s\n", time, philo->id, "has taken a fork");
+	else if (ft_strcmp("is thinking", status) == 0 && !check_death(philo))
+		printf("%lld %d %s\n", time, philo->id, "is thinking");
+	else if (ft_strcmp("is sleeping", status) == 0 && !check_death(philo))
+		printf("%lld %d %s\n", time, philo->id, "is sleeping");
+	else if (ft_strcmp("is eating", status) == 0 && !check_death(philo))
+		printf("%lld %d %s\n", time, philo->id, "is eating");
+	pthread_mutex_unlock(philo->data->write);
 }
+// void print_status(t_philo *philo, char *status)
+// {
+// 	long long current_time;
+	
+// 	current_time = get_current_time() - philo->data->start_time;
+// 	// if (check_death(philo))
+// 	if (ft_strcmp(status, "died") == 0)
+// 	{
+// 		printf("%lld %d %s\n", current_time, philo->id, status);
+// 		return ;
+// 	}
+// 	else if (!check_death(philo))
+// 	{
+// 		pthread_mutex_lock(philo->data->write);
+// 		printf("%lld %d %s\n", current_time, philo->id, status);
+// 		pthread_mutex_unlock(philo->data->write);
+// 	}
+// }
 
 bool	check_death(t_philo	*philo)
 {
@@ -65,7 +78,6 @@ bool	check_death(t_philo	*philo)
 	if (philo->data->dead)
 	{
 		pthread_mutex_unlock(philo->data->action);
-		// print_status(philo, "died");
 		return (true);
 	}
 	pthread_mutex_unlock(philo->data->action);
@@ -74,7 +86,7 @@ bool	check_death(t_philo	*philo)
 
 void	*routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	while (1)
@@ -87,27 +99,18 @@ void	*routine(void *arg)
 		}
 		pthread_mutex_unlock(philo->data->action);
 	}
-	// philo->last_meal = get_current_time();
 	if (philo->id % 2 == 0)
-	{
-		ft_usleep(philo->data->eatime / 2, philo);
-	}
-
+		ft_usleep(philo->data->eatime / 4, philo);
 	while (1)
 	{
 		if (check_death(philo))
 			return (NULL);
-		else
-		{
-			print_status(philo, "is thinking");
-			eat(philo);
-			if (check_death(philo))
-				return (NULL);
-			print_status(philo, "is sleeping");
-			ft_usleep(philo->data->sleeptime, philo);
-			if (check_death(philo))
-				return (NULL);
-		}
+		print_status(philo, "is thinking");
+		eat(philo);
+		// if (check_death(philo))
+		// 	return (NULL);
+		print_status(philo, "is sleeping");
+		ft_usleep(philo->data->sleeptime, philo);
 	}
 	return (NULL);
 }
