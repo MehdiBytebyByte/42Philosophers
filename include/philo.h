@@ -37,7 +37,8 @@ typedef struct s_data
 	long long		start_time;		//start time of the simulation
 	bool			dead;			//flag to check if a philo died	
 	pthread_mutex_t	*write;			//mutex for write
-	pthread_mutex_t	*action;			//mutex for write
+	pthread_mutex_t	*action;		//mutex for write
+	pthread_mutex_t	*check_death;	//one more mutex
 }	t_data;
 typedef struct s_philo
 {

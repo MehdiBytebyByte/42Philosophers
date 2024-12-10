@@ -36,16 +36,19 @@ t_philo	*initallphilos(t_data *data)
 	head = ft_lstnew(1);
 	if (!head)
 		return (NULL);
-	while (i < data->num)
+	if (data->num != 1)
 	{
-		current = ft_lstnew(i + 1);
-		if (!current)
-			return (NULL);
-		ft_lstadd_back(&head, current);
-		i++;
+		while (i < data->num)
+		{
+			current = ft_lstnew(i + 1);
+			if (!current)
+				return (NULL);
+			ft_lstadd_back(&head, current);
+			i++;
+		}
+		current->next = NULL;
+		i = 1;
 	}
-	current->next = NULL;
-	i = 1;
 	current = head;
 	inithelper(current, i, data);
 	return (head);
@@ -65,8 +68,12 @@ t_philo	*all_init(t_data *data, t_philo *philo)
 	data->action = safe_malloc(sizeof(pthread_mutex_t), 'a');
 	if (!data->action)
 		return (NULL);
+	data->check_death = safe_malloc(sizeof(pthread_mutex_t), 'a');
+	if (!data->check_death)
+		return (NULL);
 	if (pthread_mutex_init(data->write, NULL) != 0
-		|| pthread_mutex_init(data->action, NULL) != 0)
+		|| pthread_mutex_init(data->action, NULL) != 0 
+		|| pthread_mutex_init(data->check_death, NULL) != 0)
 	{
 		write(2, "MUTEX INIT FAILLED\n", 20);
 		return (NULL);

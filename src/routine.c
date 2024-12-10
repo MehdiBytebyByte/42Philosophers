@@ -18,10 +18,16 @@
 void	eat(t_philo *philo)
 {
 
-	pthread_mutex_lock(philo->right_fork);
-	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(philo->left_fork);
 	print_status(philo, "has taken a fork");
+	if (philo->data->num == 1)
+	{
+		ft_usleep(philo->data->dietime, philo);
+		return ;
+	}
+	pthread_mutex_lock(philo->right_fork);
+	print_status(philo, "has taken a fork");
+	
 	print_status(philo, "is eating");
 	pthread_mutex_lock(philo->data->action);
 	philo->last_meal = get_current_time();
@@ -86,6 +92,7 @@ void	*routine(void *arg)
 	{
 		ft_usleep(philo->data->eatime / 2, philo);
 	}
+
 	while (1)
 	{
 		if (check_death(philo))

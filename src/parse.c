@@ -76,13 +76,9 @@ int	parse(int ac, char **av, t_data *data)
 		return (write(2, "INVALID PARAMETER(S)\n", 22), 1);
 	if (ac == 5)
 		data->meals = -1;
-	if (parse2(ac, av, data) == -1)
+	if (parse2(ac, av, data) == 1)
 		return (-1);
 	if (data->num < 1)
 		return (write (2, "INVALID PARAMETER(S)\n", 22), 1);
-	else if (data->num == 1)
-	{
-		one_philo(data);
-	}
 	return (0);
 }
