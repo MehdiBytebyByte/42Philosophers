@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/11 12:01:23 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:15:49 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	inithelper(t_philo	*current, int i, t_data	*data)
 {
 	while (i <= data->num)
 	{
-		current->finished = false;
 		current->data = data;
 		current->last_meal = 0;
 		current->data->dead = false;
@@ -69,12 +68,9 @@ t_philo	*all_init(t_data *data, t_philo *philo)
 	data->action = galloc(sizeof(pthread_mutex_t), 'a');
 	if (!data->action)
 		return (NULL);
-	data->check_death = galloc(sizeof(pthread_mutex_t), 'a');
-	if (!data->check_death)
-		return (NULL);
+
 	if (pthread_mutex_init(data->write, NULL) != 0
-		|| pthread_mutex_init(data->action, NULL) != 0
-		|| pthread_mutex_init(data->check_death, NULL) != 0)
+		|| pthread_mutex_init(data->action, NULL) != 0)
 	{
 		write(2, "MUTEX INIT FAILLED\n", 20);
 		return (NULL);

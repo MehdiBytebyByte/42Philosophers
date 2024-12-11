@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/11 12:03:24 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:13:27 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_data
 	bool			dead;
 	pthread_mutex_t	*write;
 	pthread_mutex_t	*action;
-	pthread_mutex_t	*check_death;
 }	t_data;
 
 typedef struct s_philo
@@ -53,7 +52,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	bool			finished;
 	t_data			*data;
 	struct s_philo	*next;
 }	t_philo;
