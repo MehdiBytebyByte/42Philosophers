@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:36:29 by mboughra          #+#    #+#             */
-/*   Updated: 2024/11/25 02:32:41 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:44:47 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_atoi(const char *str)
 int	ft_strcmp(char	*s1, char	*s2)
 {
 	size_t			i;
-	
+
 	i = 0;
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;

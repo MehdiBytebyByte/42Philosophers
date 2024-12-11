@@ -6,33 +6,26 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 02:32:02 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/02 15:49:20 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:58:56 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	ft_isdigitplusplus(char *str)
+static int	ft_isdigitplusplus(char *str)
 {
 	if (*str == '+')
 		str++;
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
-			return (0);
+			return (1);
 		str++;
 	}
-	return (1);
-}
-
-int	parsechar(char *str)
-{
-	if (!ft_isdigitplusplus(str))
-		return (1);
 	return (0);
 }
 
-t_data	*setter(t_data *data, int i, int holder)
+static t_data	*setter(t_data *data, int i, int holder)
 {
 	if (i == 1)
 		data->num = holder;
@@ -47,7 +40,7 @@ t_data	*setter(t_data *data, int i, int holder)
 	return (data);
 }
 
-int	parse2(int ac, char	**av, t_data *data)
+static int	parse2(int ac, char	**av, t_data *data)
 {
 	int	holder;
 	int	i;
@@ -55,7 +48,7 @@ int	parse2(int ac, char	**av, t_data *data)
 	i = 1;
 	while (i != ac)
 	{
-		if (parsechar(av[i]))
+		if (ft_isdigitplusplus(av[i]))
 			return (write(2, "INVALID PARAMETER(S)\n", 22), 1);
 		else
 		{

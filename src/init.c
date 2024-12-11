@@ -6,13 +6,13 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/08 11:46:42 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:01:23 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	inithelper(t_philo	*current, int i, t_data	*data)
+static void	inithelper(t_philo	*current, int i, t_data	*data)
 {
 	while (i <= data->num)
 	{
@@ -73,7 +73,7 @@ t_philo	*all_init(t_data *data, t_philo *philo)
 	if (!data->check_death)
 		return (NULL);
 	if (pthread_mutex_init(data->write, NULL) != 0
-		|| pthread_mutex_init(data->action, NULL) != 0 
+		|| pthread_mutex_init(data->action, NULL) != 0
 		|| pthread_mutex_init(data->check_death, NULL) != 0)
 	{
 		write(2, "MUTEX INIT FAILLED\n", 20);
