@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 03:41:07 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/11 13:15:49 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:55:25 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ t_philo	*all_init(t_data *data, t_philo *philo)
 	data->action = galloc(sizeof(pthread_mutex_t), 'a');
 	if (!data->action)
 		return (NULL);
-
 	if (pthread_mutex_init(data->write, NULL) != 0
 		|| pthread_mutex_init(data->action, NULL) != 0)
 	{

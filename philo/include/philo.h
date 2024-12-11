@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:18:39 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/11 13:13:27 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:00:32 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ void		print_status(t_philo *philo, int status);
 int			monitor(t_philo *philo);
 bool		check_death(t_philo	*philo);
 int			ft_strcmp(char	*s1, char	*s2);
+void		eat(t_philo *philo);
 
 #endif
