@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 05:56:26 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/11 13:01:33 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:59:31 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	eat(t_philo *philo)
 	if (philo->data->num == 1)
 	{
 		ft_usleep(philo->data->dietime, philo);
+		pthread_mutex_unlock(philo->left_fork);
 		return ;
 	}
 	pthread_mutex_lock(philo->right_fork);
