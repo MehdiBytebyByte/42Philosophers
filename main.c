@@ -6,42 +6,13 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:20:47 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/07 17:32:17 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:00:27 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
 
-void	print_data(t_data *data)
-{
-	printf("num = %d\n", data->num);
-	printf("dietime = %d\n", data->dietime);
-	printf("eatime = %d\n", data->eatime);
-	printf("sleeptime = %d\n", data->sleeptime);
-	printf("meals = %d\n", data->meals);
-	printf("start --> %lld\n", data->start_time);
-	printf("BOOL --> %d\n", data->dead);
-}
-
-void	print_info(t_philo *philo, t_data *data)
-{
-	t_philo	*temp;
-
-	temp = philo;
-	printf("->%lld\n", data->start_time);
-	while (temp)
-	{
-		printf("id = %d\n", temp->id);
-		printf("mutix -> %p\n", temp->left_fork);
-		printf("mutix -> %p\n", temp->right_fork);
-		printf("====================================\n");
-		temp = temp->next;
-	}
-}
-
-
-
-void	mutex_destroyer(t_data *data, t_philo *philo)
+static void	mutex_destroyer(t_data *data, t_philo *philo)
 {
 	pthread_mutex_destroy(data->action);
 	pthread_mutex_destroy(data->write);

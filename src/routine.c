@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 05:56:26 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/08 16:20:19 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:01:33 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	eat(t_philo *philo)
 {
-
 	pthread_mutex_lock(philo->left_fork);
-	(philo, FORK);
+	print_status(philo, FORK);
 	if (philo->data->num == 1)
 	{
 		ft_usleep(philo->data->dietime, philo);
@@ -34,10 +33,9 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(philo->left_fork);
 }
 
-void print_status(t_philo *philo, int status)
+void	print_status(t_philo *philo, int status)
 {
-
-	long long time;
+	long long	time;
 
 	time = get_current_time() - philo->data->start_time;
 	pthread_mutex_lock(philo->data->write);
@@ -53,7 +51,6 @@ void print_status(t_philo *philo, int status)
 		printf("%lld %d %s\n", time, philo->id, "is eating");
 	pthread_mutex_unlock(philo->data->write);
 }
-
 
 bool	check_death(t_philo	*philo)
 {
@@ -75,7 +72,7 @@ void	*routine(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(philo->data->action);
-		if(philo->data->start_time)
+		if (philo->data->start_time)
 		{
 			pthread_mutex_unlock(philo->data->action);
 			break ;
@@ -90,18 +87,15 @@ void	*routine(void *arg)
 			return (NULL);
 		print_status(philo, THINK);
 		eat(philo);
-		// if (check_death(philo))
-		// 	return (NULL);
 		print_status(philo, SLEEP);
 		ft_usleep(philo->data->sleeptime, philo);
 	}
 	return (NULL);
 }
 
-
-long long get_current_time(void)
+long long	get_current_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
