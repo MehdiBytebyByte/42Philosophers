@@ -6,7 +6,7 @@
 /*   By: mboughra <mboughra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 02:28:22 by mboughra          #+#    #+#             */
-/*   Updated: 2024/12/11 11:55:43 by mboughra         ###   ########.fr       */
+/*   Updated: 2024/12/11 13:10:30 by mboughra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_philo	*join_threads(t_philo *philo)
 	current = philo;
 	while (current)
 	{
-		if (pthread_join(current->thread, NULL) == -1)
+		if (pthread_join(current->thread, NULL) != 0)
 		{
 			write(2, "THREAD JOIN FAILLED\n", 21);
 			return (NULL);
